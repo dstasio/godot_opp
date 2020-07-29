@@ -1,0 +1,49 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://sprites/player/idle1.png" type="Texture" id=1]
+[ext_resource path="res://sprites/player/run1.png" type="Texture" id=2]
+[ext_resource path="res://sprites/player/idle2.png" type="Texture" id=3]
+[ext_resource path="res://sprites/player/run5.png" type="Texture" id=4]
+[ext_resource path="res://sprites/player/idle8.png" type="Texture" id=5]
+[ext_resource path="res://sprites/player/run3.png" type="Texture" id=6]
+[ext_resource path="res://sprites/player/idle4.png" type="Texture" id=7]
+[ext_resource path="res://sprites/player/run2.png" type="Texture" id=8]
+[ext_resource path="res://sprites/player/idle5.png" type="Texture" id=9]
+[ext_resource path="res://sprites/player/run6.png" type="Texture" id=10]
+[ext_resource path="res://sprites/player/idle6.png" type="Texture" id=11]
+[ext_resource path="res://sprites/player/idle7.png" type="Texture" id=12]
+[ext_resource path="res://sprites/player/run4.png" type="Texture" id=13]
+[ext_resource path="res://sprites/player/idle3.png" type="Texture" id=14]
+[ext_resource path="res://scripts/player.gd" type="Script" id=15]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 5 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 14 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 13 ), ExtResource( 4 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "run",
+"speed": 15.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 16.5611
+height = 23.8472
+
+[node name="player" type="KinematicBody2D"]
+position = Vector2( 47.5729, 333.799 )
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+
+[node name="collider" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 4 )
+shape = SubResource( 2 )
