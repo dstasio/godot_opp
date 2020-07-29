@@ -27,16 +27,15 @@ func _process(delta):
 	else:
 		$sprite.animation = "idle"
 		total_f.x = 0
-	if Input.is_action_just_pressed("ui_up"):
-		total_f.y = -jump_strength
+	if Input.is_action_just_pressed("ui_up") and is_on_floor():
+		total_f.y = -jump_strength*gravity
 	else:
-		total_f.y = gravity*mass
+		total_f.y = gravity*mass*7
 	ddp.x -= friction_coeff*dp.x
 
 	var friction = -mass*gravity*friction_coeff * dp.x
 	total_f.x += friction
 	ddp = total_f / mass
-	print(dp)
 
 func _physics_process(delta):
 	dp += ddp*delta
