@@ -1,10 +1,15 @@
 extends KinematicBody2D
 
-var ddp = 0.0
-var dp  = 0.0
-var p   = 0.0
-export var acceleration = 2000000
-export var friction_coeff = 20
+var pixel_per_meter = 37.037
+
+var total_f = Vector2()
+var ddp = Vector2()
+var dp  = Vector2()
+export var leg_strength = 5000
+export var mass = 80.0
+export var friction_coeff = 0.95
+export var gravity = 9.81
+export var jump_strength = 3000
 
 func _ready():
 	$sprite.animation = "idle"
@@ -14,17 +19,30 @@ func _process(delta):
 	if Input.is_action_pressed("ui_right"):
 		$sprite.animation = "run"
 		$sprite.flip_h = false
-		ddp = acceleration
-		
+		total_f.x = leg_strength
 	elif Input.is_action_pressed("ui_left"):
 		$sprite.animation = "run"
 		$sprite.flip_h = true
-		ddp = -acceleration
+		total_f.x = -leg_strength
 	else:
 		$sprite.animation = "idle"
-	ddp -= friction_coeff*dp
+		total_f.x = 0
+	if Input.is_action_just_pressed("ui_up"):
+		total_f.y = -jump_strength
+	else:
+		total_f.y = gravity*mass
+	ddp.x -= friction_coeff*dp.x
+
+	var friction = -mass*gravity*friction_coeff * dp.x
+	total_f.x += friction
+	ddp = total_f / mass
+	print(dp)
 
 func _physics_process(delta):
-	dp = ddp*delta
-	p = dp*delta + 0.5*ddp*delta*delta
-	move_and_slide(Vector2(p, 0.0), Vector2(0.0, -1.0))
+	dp += ddp*delta
+	move_and_slide(dp*pixel_per_meter, Vector2(0.0, -1.0))
+	if is_on_floor():
+		dp.y = 0
+		
+	if abs(dp.x) < 0.1:
+		dp.x = 0
