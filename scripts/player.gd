@@ -28,7 +28,9 @@ func _process(delta):
 		if is_on_floor():
 			if $sprite.animation == "jump_down":
 				$sprite.animation = "jump_land"
-			elif $sprite.animation == "jump_land" and $sprite.frame == 1:
+			elif $sprite.animation == "jump_land" and $sprite.frame == 0:
+				pass
+			else:
 				$sprite.animation = "idle"
 		total_f.x = 0
 	if Input.is_action_just_pressed("ui_up") and is_on_floor():
