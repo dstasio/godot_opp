@@ -9,7 +9,7 @@ export var leg_strength = 5000
 export var mass = 80.0
 export var friction_coeff = 0.95
 export var gravity = 9.81
-export var jump_strength = 3000
+export var jump_strength = 9000
 
 func _ready():
 	$sprite.animation = "idle"
@@ -25,12 +25,21 @@ func _process(delta):
 		$sprite.flip_h = true
 		total_f.x = -leg_strength
 	else:
-		$sprite.animation = "idle"
+		if is_on_floor():
+			if $sprite.animation == "jump_down":
+				$sprite.animation = "jump_land"
+			elif $sprite.animation == "jump_land" and $sprite.frame == 1:
+				$sprite.animation = "idle"
 		total_f.x = 0
 	if Input.is_action_just_pressed("ui_up") and is_on_floor():
 		total_f.y = -jump_strength*gravity
 	else:
 		total_f.y = gravity*mass*7
+	
+	if dp.y < 0:
+		$sprite.animation = "jump_up"
+	elif dp.y > 0:
+		$sprite.animation = "jump_down"
 	ddp.x -= friction_coeff*dp.x
 
 	var friction = -mass*gravity*friction_coeff * dp.x

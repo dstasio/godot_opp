@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://sprites/player/idle1.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/run1.png" type="Texture" id=2]
@@ -15,6 +15,12 @@
 [ext_resource path="res://sprites/player/run4.png" type="Texture" id=13]
 [ext_resource path="res://sprites/player/idle3.png" type="Texture" id=14]
 [ext_resource path="res://scripts/player.gd" type="Script" id=15]
+[ext_resource path="res://sprites/player/jump_up1.png" type="Texture" id=16]
+[ext_resource path="res://sprites/player/jump_land1.png" type="Texture" id=17]
+[ext_resource path="res://sprites/player/jump_down1.png" type="Texture" id=18]
+[ext_resource path="res://sprites/player/jump_down2.png" type="Texture" id=19]
+[ext_resource path="res://sprites/player/jump_mid1.png" type="Texture" id=20]
+[ext_resource path="res://sprites/player/jump_land2.png" type="Texture" id=21]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 17.1301
@@ -31,6 +37,21 @@ animations = [ {
 "loop": true,
 "name": "run",
 "speed": 15.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 20 ) ],
+"loop": false,
+"name": "jump_up",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "jump_down",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 21 ) ],
+"loop": false,
+"name": "jump_land",
+"speed": 5.0
 } ]
 
 [node name="player" type="KinematicBody2D"]
@@ -45,4 +66,5 @@ shape = SubResource( 1 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
-animation = "idle"
+animation = "jump_land"
+frame = 1
