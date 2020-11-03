@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://sprites/player/idle1.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/run1.png" type="Texture" id=2]
@@ -21,6 +21,10 @@
 [ext_resource path="res://sprites/player/jump_down2.png" type="Texture" id=19]
 [ext_resource path="res://sprites/player/jump_mid1.png" type="Texture" id=20]
 [ext_resource path="res://sprites/player/jump_land2.png" type="Texture" id=21]
+[ext_resource path="res://sprites/player/duck3.png" type="Texture" id=22]
+[ext_resource path="res://sprites/player/duck1.png" type="Texture" id=23]
+[ext_resource path="res://sprites/player/duck4.png" type="Texture" id=24]
+[ext_resource path="res://sprites/player/duck2.png" type="Texture" id=25]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 17.1301
@@ -38,19 +42,24 @@ animations = [ {
 "name": "run",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
-"loop": true,
-"name": "jump_down",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 17 ), ExtResource( 21 ) ],
 "loop": false,
 "name": "jump_land",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "jump_down",
+"speed": 10.0
+}, {
 "frames": [ ExtResource( 16 ), ExtResource( 20 ) ],
 "loop": false,
 "name": "jump_up",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 25 ), ExtResource( 22 ), ExtResource( 24 ) ],
+"loop": false,
+"name": "duck",
 "speed": 15.0
 } ]
 
@@ -66,8 +75,7 @@ shape = SubResource( 1 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
-animation = "jump_land"
-frame = 1
+animation = "duck"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -78,3 +86,5 @@ drag_margin_left = 0.69
 drag_margin_top = 1.0
 drag_margin_right = 0.0
 drag_margin_bottom = 0.28
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

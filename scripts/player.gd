@@ -11,11 +11,17 @@ export var friction_coeff = 0.95
 export var gravity = 9.81
 export var jump_strength = 9000
 
+var last_floor_position = Vector2()
+
 func _ready():
 	$sprite.animation = "idle"
 	$sprite.play()
 
 func _process(delta):
+	if Input.is_action_pressed("ui_accept"):
+		position = last_floor_position
+		dp = Vector2()
+	
 	if Input.is_action_pressed("ui_right"):
 		$sprite.animation = "run"
 		$sprite.flip_h = false
@@ -38,6 +44,9 @@ func _process(delta):
 	else:
 		total_f.y = gravity*mass*7
 	
+	if Input.is_action_pressed("ui_down"):
+		$sprite.animation = "duck"
+	
 	if dp.y < 0:
 		$sprite.animation = "jump_up"
 	elif dp.y > 0:
@@ -49,6 +58,9 @@ func _process(delta):
 	ddp = total_f / mass
 
 func _physics_process(delta):
+	if is_on_floor():
+		last_floor_position = position
+		
 	dp += ddp*delta
 	move_and_slide(dp*pixel_per_meter, Vector2(0.0, -1.0))
 	if is_on_floor():
